@@ -2,16 +2,17 @@
  int main()
  {
      int stack[1000];
+     char buf[1000];
      int sp =0;
     printf("Input Enter numbers and characters in the write-back\n");
-     while ( !feof(stdin) ) {
-         int c = getchar();
-         int x;
-         switch (c) {
-             case  ' ':
-             case '\n':
-                 break;
-             case '=':
+     while (!feof(stdin)) {
+        if(scanf ("%s", buf) != 1 )
+            break;
+        switch(buf[0])
+        {
+            case '\0':
+                break;
+            case '=':
                  printf("Result = %d\n", stack[sp - 1]);  sp--;
                  break;
              case '+':
@@ -27,15 +28,9 @@
                stack[sp-2] = stack[sp-2] / stack[sp-1];   sp--;
                 break;
              default:
-                 ungetc (c, stdin);
-                 if (scanf("%d", &x) != 1) {
-                     fprintf(stderr, "Can't read integer\n");
-                     return -1;
-                 } else {
-                     stack[sp] = x;                       sp++;
-                 }
-         }
-     }
+                 stack[sp++] = atoi(buf);
+        }
+    }
      printf("Result = %d\n",stack[sp-1]);
      return 0;
  }
